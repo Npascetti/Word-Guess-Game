@@ -22,7 +22,7 @@ var Hangman = {
 
     //function to randomly select an element out of an array
 
-    
+
     
     
     
@@ -32,6 +32,7 @@ var Hangman = {
 
 function makePlatforms(){
 var selectedCountry = "Zimbabwe";
+//indicates variable gallows is a string.
 var gallows = "";
 var par = document.createElement("p");
 for (i = 0; i < selectedCountry.length; i++) {
@@ -43,9 +44,7 @@ document.body.appendChild(par);
 }
 
 //iterate creation of guess platforms.
-for (i = 0; i < selectedCountry.length; i++) {
-    gallows += "_ "
-}
+
 
 
 
