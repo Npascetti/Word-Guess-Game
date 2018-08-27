@@ -18,6 +18,11 @@ document.getElementById("guessarea").innerHTML = (userPress);}
 var Hangman = {
     "real name": "Hangman",
     function: makePlatforms()
+    //array of countries
+
+    //function to randomly select an element out of an array
+
+    
     
     
     
@@ -26,15 +31,20 @@ var Hangman = {
 
 
 function makePlatforms(){
+var selectedCountry = "Zimbabwe";
+var gallows = "";
 var par = document.createElement("p");
-var platform = document.createTextNode("_ ");
+for (i = 0; i < selectedCountry.length; i++) {
+    gallows += "_ "
+}
+var platform = document.createTextNode(gallows);
 par.appendChild(platform);
 document.body.appendChild(par);
 }
 
 //iterate creation of guess platforms.
-for (i = 0; i < 4; i++) {
-makePlatforms();
+for (i = 0; i < selectedCountry.length; i++) {
+    gallows += "_ "
 }
 
 
