@@ -11,7 +11,16 @@ var userPress = event.key.toLowerCase();
 //Write userPress to the console for testing.
 console.log(userPress);
 //This is a method that displays the keys you have pressed.
-document.getElementById("guessarea").innerHTML = (userPress);}
+document.getElementById("guessarea").innerHTML = (userPress);
+
+//replace the placeholders when user selects the right letter.
+if (userPress === "a") {
+    document.getElementById("platforms").innerHTML = "test";}
+}
+
+
+
+
 //Global variables go here.
 
 //Game object goes here.
@@ -34,16 +43,28 @@ function makePlatforms(){
 var selectedCountry = "Zimbabwe";
 //indicates variable gallows is a string.
 var gallows = "";
+
+// Creates a new p element.
 var par = document.createElement("p");
+
+ 
+// Identifies the newly created p element to platforms.
+par.setAttribute("id","platforms");
+
+
+
+//iterate creation of guess platforms.
 for (i = 0; i < selectedCountry.length; i++) {
     gallows += "_ "
 }
+
 var platform = document.createTextNode(gallows);
 par.appendChild(platform);
 document.body.appendChild(par);
+
 }
 
-//iterate creation of guess platforms.
+
 
 
 
