@@ -41,8 +41,8 @@ var Hangman = {
 
 function makePlatforms(){
 var selectedCountry = "Zimbabwe";
-//indicates variable gallows is a string.
-var gallows = "";
+//indicates variable placeholders is a string.
+var placeholders = "";
 
 // Creates a new p element.
 var par = document.createElement("p");
@@ -55,10 +55,10 @@ par.setAttribute("id","platforms");
 
 //iterate creation of guess platforms.
 for (i = 0; i < selectedCountry.length; i++) {
-    gallows += "_ "
+    placeholders += "_ "
 }
 
-var platform = document.createTextNode(gallows);
+var platform = document.createTextNode(placeholders);
 par.appendChild(platform);
 document.body.appendChild(par);
 
