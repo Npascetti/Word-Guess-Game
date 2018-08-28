@@ -24,23 +24,35 @@ if (userPress === "a") {
 //Global variables go here.
 
 //Game object goes here.
-var Hangman = {
-    "real name": "Hangman",
-    function: makePlatforms()
+var hangMan = {
+    
+    
+    
     //array of countries
-
+    
+    
     //function to randomly select an element out of an array
-
-
+    
+    function: makePlatforms()
+    
+    
     
     
     
 }
+// Creates a function that randomly selects an element out of the countriesList area.
+
+    
+
+
 //Creates a function that makes the guess platforms.
-
-
 function makePlatforms(){
-var selectedCountry = "Zimbabwe";
+    var pokemon = ["Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate","Spearow","Fearow","Ekans","Arbok","Pikachu","Raichu","Sandshrew","Sandslash","Nidoran","Nidorina","Nidoqueen","Nidoran","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales","Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume","Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian","Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath","Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel","Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash","Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong","Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix","Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor","Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon","Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking","Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros","Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon","Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax","Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"];
+
+   var selectedCountry = pokemon[Math.floor(Math.random()*pokemon.length)];
+    console.log(selectedCountry);
+
+  
 //indicates variable placeholders is a string.
 var placeholders = "";
 
@@ -57,9 +69,11 @@ par.setAttribute("id","platforms");
 for (i = 0; i < selectedCountry.length; i++) {
     placeholders += "_ "
 }
-
+//creates a text node with the placeholder variable text and sets it equal to the variable platform. 
 var platform = document.createTextNode(placeholders);
+//Appends the text node to the created paragraph.
 par.appendChild(platform);
+//appends the paragraph to the document body.
 document.body.appendChild(par);
 
 }
