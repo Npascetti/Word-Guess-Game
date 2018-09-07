@@ -27,10 +27,11 @@ var hangMan = {
   
   getGuessedCharacters: function() {
     if (typeof document.getElementById("div3").textContent != "undefined") {
-      return document.getElementById("div3").textContent
+      return document.getElementById("div3").textContent.replace("Guessed characters: ", "")
     }
   },
   setGuessedCharacters: function(guessCharacters) {
+    console.log(guessCharacters)
     this.guessedCharacters = guessCharacters;
   },
   prepareScreen: function() {
@@ -49,21 +50,24 @@ var hangMan = {
     },
   getGuess: function() {
     document.body.onkeyup = function(event) {
+      if (/^[a-zA-Z]+$/.test(String.fromCharCode(event.keyCode))) {
       document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
+      this.currentGuess = String.fromCharCode(event.keyCode);
+      hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
+      }
     }
-    console.log(getElementById("div3").textContent)
-},
-
-  readDiv: function() {
-    console.log(document.getElementById("div3").textContent);
+  },
+  populatePlaceHolder: function() {
+    if (self.selectedPokemon.split("").includes(this.currentGuess)) {
+        let correctArray = selectedPokemon.split("").map(letter => {if (letter != this.currentGuess) {
+          return letter.replace(letter, "_")
+    }})
+    }
+    console.log(correctArray)
   }
-  
-
-    
-
 }
 hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
 hangMan.setPlaceHolder(hangMan.getPlaceHolder());
 hangMan.prepareScreen();
 hangMan.getGuess();
-hangMan.readDiv();
+
