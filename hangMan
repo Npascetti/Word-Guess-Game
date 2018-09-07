@@ -12,7 +12,11 @@ var hangMan = {
   getPlaceHolder: function() {
       let placeHolder = [];
       for (i = 0; i < this.selectedPokemon.length; i++) {
-          placeHolder.push("_")
+          if (i == this.selectedPokemon.length - 1) {
+            placeHolder.push("_")
+            return placeHolder
+          } 
+          placeHolder.push("_ ")
       }
       return placeHolder
   },
@@ -23,13 +27,38 @@ var hangMan = {
       return document.onkeypress;  
   },
   setGuesses: function(getGuesses) {
-      this.guesses = getGuesses;
+      this.guessedCharacters = getGuesses;
   },
   pokemons: ["Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate","Spearow","Fearow","Ekans","Arbok","Pikachu","Raichu","Sandshrew","Sandslash","Nidoran","Nidorina","Nidoqueen","Nidoran","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales","Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume","Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian","Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath","Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel","Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash","Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong","Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix","Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor","Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon","Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking","Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros","Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon","Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax","Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"],
   
-  correctGuesses: correctGuesses = [],
+  guessedCharacters: "",
+    
+  prepareScreen: function() {
+      placeHolderDiv = document.createElement("div");
+      placeHolderContent = document.createTextNode(this.placeHolder.join(""));
+      placeHolderDiv.appendChild(placeHolderContent);
+      placeHolderCurrentDiv = document.getElementById("div1");
+      document.body.insertBefore(placeHolderDiv, placeHolderCurrentDiv.nextSibling);
+    
+      guessDiv = document.createElement("div");
+      guessContent = document.createTextNode("Guessed characters: " + this.guessedCharacters);
+      guessDiv.setAttribute("id", "div3")
+      guessDiv.appendChild(guessContent);
+      guessContentCurrentDiv = document.getElementById("div2");
+      document.body.insertBefore(guessDiv, guessContentCurrentDiv.nextSibling);
+    },
+  updateGuess: function() {
+    document.body.onkeyup = function(event) {
+  document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
+}
+    
+}
   
 
     
 
 }
+hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
+hangMan.setPlaceHolder(hangMan.getPlaceHolder());
+hangMan.prepareScreen();
+hangMan.updateGuess();
