@@ -8,6 +8,7 @@ var hangMan = {
     
   setSelectedPokemon: function(getRandomPokemon) {
     this.selectedPokemon = getRandomPokemon;
+    console.log(this.selectedPokemon)
   },
   getPlaceHolder: function() {
       let placeHolder = [];
@@ -52,22 +53,49 @@ var hangMan = {
     document.body.onkeyup = function(event) {
       if (/^[a-zA-Z]+$/.test(String.fromCharCode(event.keyCode))) {
       document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
-      this.currentGuess = String.fromCharCode(event.keyCode);
+      hangMan.setCurrentGuess(hangMan.getCurrentGuess(String.fromCharCode(event.keyCode)));
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
+      hangMan.setPopulatePlaceHolder(hangMan.getPopulatePlaceHolder(hangMan.populatePlaceHolder()))
+      hangMan.populatePlaceHolder();
       }
     }
   },
   populatePlaceHolder: function() {
-    if (self.selectedPokemon.split("").includes(this.currentGuess)) {
-        let correctArray = selectedPokemon.split("").map(letter => {if (letter != this.currentGuess) {
-          return letter.replace(letter, "_")
-    }})
+    console.log(this.currentGuess);
+    console.log(this.selectedPokemon.toUpperCase().split("").includes(this.currentGuess))
+    if (this.selectedPokemon.toUpperCase().split("").includes(this.currentGuess)) {
+        console.log("letter is in mystery pokemon");
+        this.correctArray = this.selectedPokemon.toUpperCase().split("").map(function(letter) {if (letter != this.currentGuess) {
+          return letter.replace(letter, "_")}});
+          console.log(this.correctArray);
+      for (i=0; i<=this.correctArray.length; i++) {
+        console.log(this.selectedPokemon.split("")[i]);
+        console.log(this.currentGuess);
+      if (this.selectedPokemon.toUpperCase().split("")[i] == this.currentGuess) {
+        this.correctArray.splice(i, 1, this.currentGuess)
+      }
     }
-    console.log(correctArray)
+    console.log(this.correctArray)
+    return this.correctArray
   }
+
+
+  },
+  setCurrentGuess: function(currentGuess) {
+    this.currentGuess = currentGuess;
+  },
+  getCurrentGuess: function(keyInput) {
+    return keyInput
+  },
+  getPopulatePlaceHolder: function(populatePlaceHolder) {
+    return populatePlaceHolder
+  },
+  setPopulatePlaceHolder: function(correctArray) {
+    this.correctArray = correctArray;
+  }
+
 }
 hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
 hangMan.setPlaceHolder(hangMan.getPlaceHolder());
 hangMan.prepareScreen();
 hangMan.getGuess();
-
