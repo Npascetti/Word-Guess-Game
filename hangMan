@@ -61,21 +61,17 @@ var hangMan = {
     }
   },
   populatePlaceHolder: function() {
-    console.log(this.currentGuess);
-    console.log(this.selectedPokemon.toUpperCase().split("").includes(this.currentGuess))
+    console.log(this.correctArray)
     if (this.selectedPokemon.toUpperCase().split("").includes(this.currentGuess)) {
-        console.log("letter is in mystery pokemon");
+        if (typeof this.correctArray == "undefined") {
         this.correctArray = this.selectedPokemon.toUpperCase().split("").map(function(letter) {if (letter != this.currentGuess) {
           return letter.replace(letter, "_")}});
-          console.log(this.correctArray);
-      for (i=0; i<=this.correctArray.length; i++) {
-        console.log(this.selectedPokemon.split("")[i]);
-        console.log(this.currentGuess);
+        }
+      for (i=0; i<this.correctArray.length; i++) {
       if (this.selectedPokemon.toUpperCase().split("")[i] == this.currentGuess) {
         this.correctArray.splice(i, 1, this.currentGuess)
       }
     }
-    console.log(this.correctArray)
     return this.correctArray
   }
 
