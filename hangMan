@@ -1,4 +1,3 @@
-
 //Game object goes here.
 var hangMan = {
 
@@ -67,14 +66,14 @@ var hangMan = {
         this.correctArray = this.selectedPokemon.toUpperCase().split("").map(function(letter) {if (letter != this.currentGuess) {
           return letter.replace(letter, "_")}});
         }
-      for (i=0; i<this.correctArray.length; i++) {
+      for (let i=0; i<this.correctArray.length; i++) {
       if (this.selectedPokemon.toUpperCase().split("")[i] == this.currentGuess) {
         this.correctArray.splice(i, 1, this.currentGuess)
       }
     }
     return this.correctArray
   }
-
+    return this.correctArray
 
   },
   setCurrentGuess: function(currentGuess) {
