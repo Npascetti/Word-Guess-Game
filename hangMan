@@ -107,10 +107,16 @@ var hangMan = {
     hangMan.setPlaceHolder(hangMan.getPlaceHolder());
     delete this.correctArray;
     delete this.wrongGuessCount;
+    hangMan.winState = false;
     let div3 = document.getElementById('div3');
     let div4 = document.getElementById('div4');
+    let resetButton = document.getElementById("resetButton");
     div3.remove();
     div4.remove();
+    if (resetButton != null) {
+      resetButton.remove();
+    }
+    
     hangMan.prepareScreen();
 
     
@@ -132,11 +138,13 @@ var hangMan = {
     if (hangMan.wrongGuessCount == 6) {
       //call fail game logic// 
       console.log("YOU LOST")
+      hangMan.createResetButton();
     }
     if (JSON.stringify(Object.keys(hangMan.counts)) === JSON.stringify(Object.keys(hangMan.correctArrayObj))) {
       //call win game logic//
       console.log("YOU WON")
       hangMan.winState = true
+      hangMan.createResetButton();
       
       
     }
@@ -167,11 +175,26 @@ var hangMan = {
 },
   correctArray: [],
   
-  winState: false
+  winState: false,
+  
+  createResetButton: function() {
+     resetButton = document.createElement("button");
+     resetButton.setAttribute("id", "resetButton");
+     resetButton.setAttribute("type", "button");
+     resetButtonContent = document.createTextNode("Play Again");
+     resetButton.appendChild(resetButtonContent);
+     parentResetButtonDiv = document.getElementById("div3");
+     document.body.insertBefore(resetButton, parentResetButtonDiv.nextSibling);
+
+     resetButton.onclick = function() {
+       hangMan.resetGame();
+     }
+  }
 
 
 }
 hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
 hangMan.setPlaceHolder(hangMan.getPlaceHolder());
 hangMan.prepareScreen();
+hangMan.resetGame();
 hangMan.getGuess();
