@@ -124,10 +124,10 @@ var hangMan = {
   checkWinLose: function() {
     //counts object is populated with unique values from selected pokemon//
     console.log(hangMan.counts);
-    let uniqueLetters = Object.keys(hangMan.counts);
-    console.log(uniqueLetters);
+    this.uniqueLetters = Object.keys(hangMan.counts);
+    console.log(this.uniqueLetters);
     console.log(hangMan.guessedCharacters.split(""));
-    hangMan.setWrongGuessCount(hangMan.getWrongGuessCount(hangMan.compare(uniqueLetters, hangMan.guessedCharacters.split(""))));
+    hangMan.setWrongGuessCount(hangMan.getWrongGuessCount(hangMan.compare(this.uniqueLetters, hangMan.guessedCharacters.split(""))));
 
     this.correctArrayObj = {};
     this.correctArray.forEach(letter => {
