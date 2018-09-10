@@ -131,7 +131,7 @@ var hangMan = {
       //call fail game logic// 
       console.log("YOU LOST")
     }
-    if (hangMan.correctArrayObj === hangMan.counts) {
+    if (JSON.stringify(Object.keys(hangMan.counts)) == JSON.stringify(Object.keys(hangMan.correctArrayObj))) {
       //call win game logic//
       console.log("YOU WON")
       
@@ -162,6 +162,7 @@ var hangMan = {
   return Object.keys(objMap);
 },
   correctArray: []
+
 
 }
 hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
