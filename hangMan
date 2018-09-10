@@ -56,6 +56,10 @@ var hangMan = {
     },
   getGuess: function() {
     document.body.onkeyup = function(event) {
+     if (hangMan.wrongGuessCount == 6 || hangMan.winState == true) {
+      return hangMan.wrongGuessCount
+    }
+     
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
       if (/^[a-zA-Z'.]+$/.test(String.fromCharCode(event.keyCode)) && !hangMan.guessedCharacters.includes(String.fromCharCode(event.keyCode))) {
       document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
@@ -112,8 +116,6 @@ var hangMan = {
     
   },
   checkWinLose: function() {
-    //pseudo code for reference later//
-    //checking if hangman was hung//
     //counts object is populated with unique values from selected pokemon//
     console.log(hangMan.counts);
     let uniqueLetters = Object.keys(hangMan.counts);
@@ -131,9 +133,11 @@ var hangMan = {
       //call fail game logic// 
       console.log("YOU LOST")
     }
-    if (JSON.stringify(Object.keys(hangMan.counts)) == JSON.stringify(Object.keys(hangMan.correctArrayObj))) {
+    if (JSON.stringify(Object.keys(hangMan.counts)) === JSON.stringify(Object.keys(hangMan.correctArrayObj))) {
       //call win game logic//
       console.log("YOU WON")
+      hangMan.winState = true
+      
       
     }
     
@@ -161,7 +165,9 @@ var hangMan = {
   console.log(Object.keys(objMap));
   return Object.keys(objMap);
 },
-  correctArray: []
+  correctArray: [],
+  
+  winState: false
 
 
 }
