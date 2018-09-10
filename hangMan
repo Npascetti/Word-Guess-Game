@@ -111,10 +111,14 @@ var hangMan = {
     let div3 = document.getElementById('div3');
     let div4 = document.getElementById('div4');
     let resetButton = document.getElementById("resetButton");
+    let winMessage = document.getElementById("winMessage");
     div3.remove();
     div4.remove();
     if (resetButton != null) {
       resetButton.remove();
+    }
+    if (winMessage != null) {
+      winMessage.remove();
     }
     
     hangMan.prepareScreen();
@@ -144,6 +148,7 @@ var hangMan = {
       //call win game logic//
       console.log("YOU WON")
       hangMan.winState = true
+      hangMan.createWinMessage();
       hangMan.createResetButton();
       
       
@@ -183,12 +188,21 @@ var hangMan = {
      resetButton.setAttribute("type", "button");
      resetButtonContent = document.createTextNode("Play Again");
      resetButton.appendChild(resetButtonContent);
-     parentResetButtonDiv = document.getElementById("div3");
+     parentResetButtonDiv = document.getElementById("winMessage");
      document.body.insertBefore(resetButton, parentResetButtonDiv.nextSibling);
 
      resetButton.onclick = function() {
        hangMan.resetGame();
      }
+     
+  },
+  createWinMessage: function() {
+    winMessage = document.createElement("h3");
+    winMessage.setAttribute("id", "winMessage")
+    winMessageContent = document.createTextNode("You Win!");
+    winMessage.appendChild(winMessageContent);
+    parentWinMessageDiv = document.getElementById("div3");
+    document.body.insertBefore(winMessage, parentWinMessageDiv.nextSibling);
   }
 
 
