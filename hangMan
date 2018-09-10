@@ -57,7 +57,7 @@ var hangMan = {
   getGuess: function() {
     document.body.onkeyup = function(event) {
      if (hangMan.wrongGuessCount == 6 || hangMan.winState == true) {
-      return hangMan.wrongGuessCount
+      return
     }
      
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
