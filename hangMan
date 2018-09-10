@@ -8,6 +8,11 @@ var hangMan = {
   setSelectedPokemon: function(getRandomPokemon) {
     this.selectedPokemon = getRandomPokemon;
     console.log(this.selectedPokemon)
+    this.counts = {};
+    this.selectedPokemon.split("").forEach(letter => {
+    this.counts[letter] = this.counts[letter] ? this.counts[letter] + 1 : 1;
+});
+    console.log(this.counts)
   },
   getPlaceHolder: function() {
       let placeHolder = [];
@@ -23,7 +28,7 @@ var hangMan = {
   setPlaceHolder: function(getPlaceHolder) {
     this.placeHolder = getPlaceHolder;
   },
-  pokemons: ["Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise","Caterpie","Metapod","Butterfree","Weedle","Kakuna","Beedrill","Pidgey","Pidgeotto","Pidgeot","Rattata","Raticate","Spearow","Fearow","Ekans","Arbok","Pikachu","Raichu","Sandshrew","Sandslash","Nidoran","Nidorina","Nidoqueen","Nidoran","Nidorino","Nidoking","Clefairy","Clefable","Vulpix","Ninetales","Jigglypuff","Wigglytuff","Zubat","Golbat","Oddish","Gloom","Vileplume","Paras","Parasect","Venonat","Venomoth","Diglett","Dugtrio","Meowth","Persian","Psyduck","Golduck","Mankey","Primeape","Growlithe","Arcanine","Poliwag","Poliwhirl","Poliwrath","Abra","Kadabra","Alakazam","Machop","Machoke","Machamp","Bellsprout","Weepinbell","Victreebel","Tentacool","Tentacruel","Geodude","Graveler","Golem","Ponyta","Rapidash","Slowpoke","Slowbro","Magnemite","Magneton","Farfetch'd","Doduo","Dodrio","Seel","Dewgong","Grimer","Muk","Shellder","Cloyster","Gastly","Haunter","Gengar","Onix","Drowzee","Hypno","Krabby","Kingler","Voltorb","Electrode","Exeggcute","Exeggutor","Cubone","Marowak","Hitmonlee","Hitmonchan","Lickitung","Koffing","Weezing","Rhyhorn","Rhydon","Chansey","Tangela","Kangaskhan","Horsea","Seadra","Goldeen","Seaking","Staryu","Starmie","Mr. Mime","Scyther","Jynx","Electabuzz","Magmar","Pinsir","Tauros","Magikarp","Gyarados","Lapras","Ditto","Eevee","Vaporeon","Jolteon","Flareon","Porygon","Omanyte","Omastar","Kabuto","Kabutops","Aerodactyl","Snorlax","Articuno","Zapdos","Moltres","Dratini","Dragonair","Dragonite","Mewtwo","Mew"],
+  pokemons: ["BULBASAUR", "IVYSAUR", "VENUSAUR", "CHARMANDER", "CHARMELEON", "CHARIZARD", "SQUIRTLE", "WARTORTLE", "BLASTOISE", "CATERPIE", "METAPOD", "BUTTERFREE", "WEEDLE", "KAKUNA", "BEEDRILL", "PIDGEY", "PIDGEOTTO", "PIDGEOT", "RATTATA", "RATICATE", "SPEAROW", "FEAROW", "EKANS", "ARBOK", "PIKACHU", "RAICHU", "SANDSHREW", "SANDSLASH", "NIDORAN", "NIDORINA", "NIDOQUEEN", "NIDORAN", "NIDORINO", "NIDOKING", "CLEFAIRY", "CLEFABLE", "VULPIX", "NINETALES", "JIGGLYPUFF", "WIGGLYTUFF", "ZUBAT", "GOLBAT", "ODDISH", "GLOOM", "VILEPLUME", "PARAS", "PARASECT", "VENONAT", "VENOMOTH", "DIGLETT", "DUGTRIO", "MEOWTH", "PERSIAN", "PSYDUCK", "GOLDUCK", "MANKEY", "PRIMEAPE", "GROWLITHE", "ARCANINE", "POLIWAG", "POLIWHIRL", "POLIWRATH", "ABRA", "KADABRA", "ALAKAZAM", "MACHOP", "MACHOKE", "MACHAMP", "BELLSPROUT", "WEEPINBELL", "VICTREEBEL", "TENTACOOL", "TENTACRUEL", "GEODUDE", "GRAVELER", "GOLEM", "PONYTA", "RAPIDASH", "SLOWPOKE", "SLOWBRO", "MAGNEMITE", "MAGNETON", "FARFETCH'D", "DODUO", "DODRIO", "SEEL", "DEWGONG", "GRIMER", "MUK", "SHELLDER", "CLOYSTER", "GASTLY", "HAUNTER", "GENGAR", "ONIX", "DROWZEE", "HYPNO", "KRABBY", "KINGLER", "VOLTORB", "ELECTRODE", "EXEGGCUTE", "EXEGGUTOR", "CUBONE", "MAROWAK", "HITMONLEE", "HITMONCHAN", "LICKITUNG", "KOFFING", "WEEZING", "RHYHORN", "RHYDON", "CHANSEY", "TANGELA", "KANGASKHAN", "HORSEA", "SEADRA", "GOLDEEN", "SEAKING", "STARYU", "STARMIE", "MR. MIME", "SCYTHER", "JYNX", "ELECTABUZZ", "MAGMAR", "PINSIR", "TAUROS", "MAGIKARP", "GYARADOS", "LAPRAS", "DITTO", "EEVEE", "VAPOREON", "JOLTEON", "FLAREON", "PORYGON", "OMANYTE", "OMASTAR", "KABUTO", "KABUTOPS", "AERODACTYL", "SNORLAX", "ARTICUNO", "ZAPDOS", "MOLTRES", "DRATINI", "DRAGONAIR", "DRAGONITE", "MEWTWO", "MEW"],
   
   getGuessedCharacters: function() {
     if (typeof document.getElementById("div3").textContent != "undefined") {
@@ -51,12 +56,14 @@ var hangMan = {
     },
   getGuess: function() {
     document.body.onkeyup = function(event) {
-      if (/^[a-zA-Z']+$/.test(String.fromCharCode(event.keyCode))) {
+      hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
+      if (/^[a-zA-Z'.]+$/.test(String.fromCharCode(event.keyCode)) && !hangMan.guessedCharacters.includes(String.fromCharCode(event.keyCode))) {
       document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
       hangMan.setCurrentGuess(hangMan.getCurrentGuess(String.fromCharCode(event.keyCode)));
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
       hangMan.setPopulatePlaceHolder(hangMan.getPopulatePlaceHolder(hangMan.populatePlaceHolder()))
       hangMan.populatePlaceHolder();
+      hangMan.checkWinLose();
       }
     }
   },
@@ -95,6 +102,7 @@ var hangMan = {
     hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
     hangMan.setPlaceHolder(hangMan.getPlaceHolder());
     delete this.correctArray;
+    delete this.wrongGuessCount;
     let div3 = document.getElementById('div3');
     let div4 = document.getElementById('div4');
     div3.remove();
@@ -106,11 +114,54 @@ var hangMan = {
   checkWinLose: function() {
     //pseudo code for reference later//
     //checking if hangman was hung//
-    if(charcount of chars in guessed characters that are not in selectedPokenon.join("") == 6) {
-      call resetGame button/fail
+    //counts object is populated with unique values from selected pokemon//
+    console.log(hangMan.counts);
+    let uniqueLetters = Object.keys(hangMan.counts);
+    console.log(uniqueLetters);
+    console.log(hangMan.guessedCharacters.split(""));
+    hangMan.setWrongGuessCount(hangMan.getWrongGuessCount(hangMan.compare(uniqueLetters, hangMan.guessedCharacters.split(""))));
+
+    this.correctArrayObj = {};
+    this.correctArray.forEach(letter => {
+    this.correctArrayObj[letter] = this.correctArray[letter] ? this.correctArray[letter] + 1 : 1;
+});
+
+    console.log(hangMan.wrongGuessCount)
+    if (hangMan.wrongGuessCount == 6) {
+      //call fail game logic// 
+      console.log("YOU LOST")
+    }
+    if (hangMan.correctArrayObj === hangMan.counts) {
+      //call win game logic//
+      console.log("YOU WON")
+      
     }
     
+  },
+  wrongGuessCount:0,
+  
+  getWrongGuessCount: function(correctGuesses) {
+    if (correctGuesses == 0) {
+      return 1 + hangMan.wrongGuessCount;
+    }
+    return hangMan.guessedCharacters.length - correctGuesses.length;
+  },
+  setWrongGuessCount: function(correctGuessCount) {
+    this.wrongGuessCount = correctGuessCount;
+  },
+  compare: function(arr1,arr2){
+  
+  const objMap={};
+  
+  arr1.forEach((e1)=>arr2.forEach((e2)=> {if(e1 === e2){
+       objMap[e1]=objMap[e1]+1||1 ;
+    }
   }
+));
+  console.log(Object.keys(objMap));
+  return Object.keys(objMap);
+},
+  correctArray: []
 
 }
 hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
