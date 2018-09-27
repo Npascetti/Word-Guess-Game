@@ -1,10 +1,23 @@
 //Game object goes here.
 var hangMan = {
-
+  //wrongGuessCount is initialized to 0//
+  wrongGuessCount: 0,
+  //remainingGuesses is the number of remaining wrong guesses//
+  //maybe will enable to initialize value with user input//
+  remainingGuesses: 6,
+  
+  //initializing array was causing game to break...working now// 
+  //correctArray is empty array, until it becomes populated with correct guesses//
+  // correctArray: [],
+  //winState is initialized to false//
+  winState: false,
+  //pokemons is a list of 151 pokemon//
+  pokemons: ["BULBASAUR", "IVYSAUR", "VENUSAUR", "CHARMANDER", "CHARMELEON", "CHARIZARD", "SQUIRTLE", "WARTORTLE", "BLASTOISE", "CATERPIE", "METAPOD", "BUTTERFREE", "WEEDLE", "KAKUNA", "BEEDRILL", "PIDGEY", "PIDGEOTTO", "PIDGEOT", "RATTATA", "RATICATE", "SPEAROW", "FEAROW", "EKANS", "ARBOK", "PIKACHU", "RAICHU", "SANDSHREW", "SANDSLASH", "NIDORAN", "NIDORINA", "NIDOQUEEN", "NIDORAN", "NIDORINO", "NIDOKING", "CLEFAIRY", "CLEFABLE", "VULPIX", "NINETALES", "JIGGLYPUFF", "WIGGLYTUFF", "ZUBAT", "GOLBAT", "ODDISH", "GLOOM", "VILEPLUME", "PARAS", "PARASECT", "VENONAT", "VENOMOTH", "DIGLETT", "DUGTRIO", "MEOWTH", "PERSIAN", "PSYDUCK", "GOLDUCK", "MANKEY", "PRIMEAPE", "GROWLITHE", "ARCANINE", "POLIWAG", "POLIWHIRL", "POLIWRATH", "ABRA", "KADABRA", "ALAKAZAM", "MACHOP", "MACHOKE", "MACHAMP", "BELLSPROUT", "WEEPINBELL", "VICTREEBEL", "TENTACOOL", "TENTACRUEL", "GEODUDE", "GRAVELER", "GOLEM", "PONYTA", "RAPIDASH", "SLOWPOKE", "SLOWBRO", "MAGNEMITE", "MAGNETON", "FARFETCH'D", "DODUO", "DODRIO", "SEEL", "DEWGONG", "GRIMER", "MUK", "SHELLDER", "CLOYSTER", "GASTLY", "HAUNTER", "GENGAR", "ONIX", "DROWZEE", "HYPNO", "KRABBY", "KINGLER", "VOLTORB", "ELECTRODE", "EXEGGCUTE", "EXEGGUTOR", "CUBONE", "MAROWAK", "HITMONLEE", "HITMONCHAN", "LICKITUNG", "KOFFING", "WEEZING", "RHYHORN", "RHYDON", "CHANSEY", "TANGELA", "KANGASKHAN", "HORSEA", "SEADRA", "GOLDEEN", "SEAKING", "STARYU", "STARMIE", "MR. MIME", "SCYTHER", "JYNX", "ELECTABUZZ", "MAGMAR", "PINSIR", "TAUROS", "MAGIKARP", "GYARADOS", "LAPRAS", "DITTO", "EEVEE", "VAPOREON", "JOLTEON", "FLAREON", "PORYGON", "OMANYTE", "OMASTAR", "KABUTO", "KABUTOPS", "AERODACTYL", "SNORLAX", "ARTICUNO", "ZAPDOS", "MOLTRES", "DRATINI", "DRAGONAIR", "DRAGONITE", "MEWTWO", "MEW"],
+  
+  
   getRandomPokemon: function() {
     return this.pokemons[Math.floor(Math.random() * this.pokemons.length)];
   },
-    
   setSelectedPokemon: function(getRandomPokemon) {
     this.selectedPokemon = getRandomPokemon;
     console.log(this.selectedPokemon)
@@ -14,7 +27,9 @@ var hangMan = {
 });
     console.log(this.counts)
   },
+  
   getPlaceHolder: function() {
+      
       let placeHolder = [];
       for (i = 0; i < this.selectedPokemon.length; i++) {
           if (i == this.selectedPokemon.length - 1) {
@@ -28,7 +43,6 @@ var hangMan = {
   setPlaceHolder: function(getPlaceHolder) {
     this.placeHolder = getPlaceHolder;
   },
-  pokemons: ["BULBASAUR", "IVYSAUR", "VENUSAUR", "CHARMANDER", "CHARMELEON", "CHARIZARD", "SQUIRTLE", "WARTORTLE", "BLASTOISE", "CATERPIE", "METAPOD", "BUTTERFREE", "WEEDLE", "KAKUNA", "BEEDRILL", "PIDGEY", "PIDGEOTTO", "PIDGEOT", "RATTATA", "RATICATE", "SPEAROW", "FEAROW", "EKANS", "ARBOK", "PIKACHU", "RAICHU", "SANDSHREW", "SANDSLASH", "NIDORAN", "NIDORINA", "NIDOQUEEN", "NIDORAN", "NIDORINO", "NIDOKING", "CLEFAIRY", "CLEFABLE", "VULPIX", "NINETALES", "JIGGLYPUFF", "WIGGLYTUFF", "ZUBAT", "GOLBAT", "ODDISH", "GLOOM", "VILEPLUME", "PARAS", "PARASECT", "VENONAT", "VENOMOTH", "DIGLETT", "DUGTRIO", "MEOWTH", "PERSIAN", "PSYDUCK", "GOLDUCK", "MANKEY", "PRIMEAPE", "GROWLITHE", "ARCANINE", "POLIWAG", "POLIWHIRL", "POLIWRATH", "ABRA", "KADABRA", "ALAKAZAM", "MACHOP", "MACHOKE", "MACHAMP", "BELLSPROUT", "WEEPINBELL", "VICTREEBEL", "TENTACOOL", "TENTACRUEL", "GEODUDE", "GRAVELER", "GOLEM", "PONYTA", "RAPIDASH", "SLOWPOKE", "SLOWBRO", "MAGNEMITE", "MAGNETON", "FARFETCH'D", "DODUO", "DODRIO", "SEEL", "DEWGONG", "GRIMER", "MUK", "SHELLDER", "CLOYSTER", "GASTLY", "HAUNTER", "GENGAR", "ONIX", "DROWZEE", "HYPNO", "KRABBY", "KINGLER", "VOLTORB", "ELECTRODE", "EXEGGCUTE", "EXEGGUTOR", "CUBONE", "MAROWAK", "HITMONLEE", "HITMONCHAN", "LICKITUNG", "KOFFING", "WEEZING", "RHYHORN", "RHYDON", "CHANSEY", "TANGELA", "KANGASKHAN", "HORSEA", "SEADRA", "GOLDEEN", "SEAKING", "STARYU", "STARMIE", "MR. MIME", "SCYTHER", "JYNX", "ELECTABUZZ", "MAGMAR", "PINSIR", "TAUROS", "MAGIKARP", "GYARADOS", "LAPRAS", "DITTO", "EEVEE", "VAPOREON", "JOLTEON", "FLAREON", "PORYGON", "OMANYTE", "OMASTAR", "KABUTO", "KABUTOPS", "AERODACTYL", "SNORLAX", "ARTICUNO", "ZAPDOS", "MOLTRES", "DRATINI", "DRAGONAIR", "DRAGONITE", "MEWTWO", "MEW"],
   
   getGuessedCharacters: function() {
     if (typeof document.getElementById("div3").textContent != "undefined") {
@@ -39,6 +53,65 @@ var hangMan = {
     console.log(guessCharacters)
     this.guessedCharacters = guessCharacters;
   },
+  //gets the most recent keyboard input//
+  getCurrentGuess: function(keyInput) {
+    return keyInput
+  },
+  setCurrentGuess: function(currentGuess) {
+    this.currentGuess = currentGuess;
+  },
+  
+  // getPopulatePlaceHolder: function(populatePlaceHolder) {
+  //   return populatePlaceHolder
+  // },
+  setPopulatePlaceHolder: function(correctArray) {
+    this.correctArray = correctArray;
+  },
+  createResetButton: function() {
+     resetButton = document.createElement("button");
+     resetButton.setAttribute("id", "resetButton");
+     resetButton.setAttribute("type", "button");
+     resetButtonContent = document.createTextNode("Play Again");
+     resetButton.appendChild(resetButtonContent);
+     if (document.getElementById("winMessage") != null) {
+       parentResetButtonDiv = document.getElementById("winMessage");
+     }
+     if (document.getElementById("loseMessage") != null) {
+       parentResetButtonDiv = document.getElementById("loseMessage");
+     }
+     
+
+     document.body.insertBefore(resetButton, parentResetButtonDiv.nextSibling);
+
+     resetButton.onclick = function() {
+       hangMan.resetGame();
+     }
+     
+  },
+  createWinMessage: function() {
+    winMessage = document.createElement("h3");
+    winMessage.setAttribute("id", "winMessage")
+    winMessageContent = document.createTextNode("You Win!");
+    winMessage.appendChild(winMessageContent);
+    parentWinMessageDiv = document.getElementById("div3");
+    document.body.insertBefore(winMessage, parentWinMessageDiv.nextSibling);
+  },
+  createLoseMessage: function() {
+    loseMessage = document.createElement("h3");
+    loseMessage.setAttribute("id", "loseMessage")
+    loseMessageContent = document.createTextNode("Sorry, you ran out of guesses!");
+    loseMessage.appendChild(loseMessageContent);
+    parentLoseMessageDiv = document.getElementById("div3");
+    document.body.insertBefore(loseMessage, parentLoseMessageDiv.nextSibling);
+    
+    loseChosenPokemon = document.createElement("h4");
+    loseChosenPokemon.setAttribute("id", "loseChosenPokemon")
+    loseChosenPokemonContent = document.createTextNode("Your selected pokemon was " + hangMan.selectedPokemon);
+    loseChosenPokemon.appendChild(loseChosenPokemonContent);
+    parentLoseChosenPokemon = document.getElementById("loseMessage");
+    parentLoseChosenPokemon.appendChild(loseChosenPokemon);
+  },
+  
   prepareScreen: function() {
       placeHolderDiv = document.createElement("div");
       placeHolderDiv.setAttribute("id", "div4");
@@ -53,7 +126,15 @@ var hangMan = {
       guessDiv.appendChild(guessContent);
       guessContentCurrentDiv = document.getElementById("div2");
       document.body.insertBefore(guessDiv, guessContentCurrentDiv.nextSibling);
+    
+      remainingGuesses = document.createElement("div");
+      remainingGuesses.setAttribute("id", "remainingGuessesDiv");
+      remainingGuessesContent = document.createTextNode("Remaining Wrong Guesses: " + hangMan.remainingGuesses);
+      remainingGuesses.appendChild(remainingGuessesContent);
+      remainingGuessesCurrentDiv = document.getElementById("div2");
+      document.body.insertBefore(remainingGuesses, remainingGuessesCurrentDiv.nextSibling);
     },
+  
   getGuess: function() {
     document.body.onkeyup = function(event) {
      if (hangMan.wrongGuessCount == 6 || hangMan.winState == true) {
@@ -61,16 +142,22 @@ var hangMan = {
     }
      
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
-      if (/^[a-zA-Z'.]+$/.test(String.fromCharCode(event.keyCode)) && !hangMan.guessedCharacters.includes(String.fromCharCode(event.keyCode))) {
+      console.log(event.keyCode)
+      console.log(String.fromCharCode(event.keyCode))
+      if (/^[a-zA-Z]+$/.test(String.fromCharCode(event.keyCode)) && !hangMan.guessedCharacters.includes(String.fromCharCode(event.keyCode))) {
+      console.log(event.keyCode)
+      console.log(String.fromCharCode(event.keyCode))
       document.getElementById("div3").innerHTML += String.fromCharCode(event.keyCode);
       hangMan.setCurrentGuess(hangMan.getCurrentGuess(String.fromCharCode(event.keyCode)));
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
-      hangMan.setPopulatePlaceHolder(hangMan.getPopulatePlaceHolder(hangMan.populatePlaceHolder()))
+      hangMan.setPopulatePlaceHolder(hangMan.populatePlaceHolder());
       hangMan.populatePlaceHolder();
+      // hangMan.setRemainingGuesses(hangMan.getRemainingGuesses());
       hangMan.checkWinLose();
       }
     }
   },
+  
   populatePlaceHolder: function() {
     console.log(this.correctArray)
     if (this.selectedPokemon.toUpperCase().split("").includes(this.currentGuess)) {
@@ -90,41 +177,37 @@ var hangMan = {
     return this.correctArray
 
   },
-  setCurrentGuess: function(currentGuess) {
-    this.currentGuess = currentGuess;
-  },
-  getCurrentGuess: function(keyInput) {
-    return keyInput
-  },
-  getPopulatePlaceHolder: function(populatePlaceHolder) {
-    return populatePlaceHolder
-  },
-  setPopulatePlaceHolder: function(correctArray) {
-    this.correctArray = correctArray;
-  },
+  
   resetGame: function() {
     hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
     hangMan.setPlaceHolder(hangMan.getPlaceHolder());
     delete this.correctArray;
-    delete this.wrongGuessCount;
+    this.wrongGuessCount = 0;
     hangMan.winState = false;
     let div3 = document.getElementById('div3');
     let div4 = document.getElementById('div4');
     let resetButton = document.getElementById("resetButton");
     let winMessage = document.getElementById("winMessage");
+    let loseMessage = document.getElementById("loseMessage");
+    let remainingGuessesDiv = document.getElementById("remainingGuessesDiv");
+
     div3.remove();
     div4.remove();
+    remainingGuessesDiv.remove();
     if (resetButton != null) {
       resetButton.remove();
     }
     if (winMessage != null) {
       winMessage.remove();
     }
+    if (loseMessage != null) {
+      loseMessage.remove();
+    }
+    hangMan.remainingGuesses = 6;
     
     hangMan.prepareScreen();
-
-    
   },
+  
   checkWinLose: function() {
     //counts object is populated with unique values from selected pokemon//
     console.log(hangMan.counts);
@@ -132,16 +215,18 @@ var hangMan = {
     console.log(this.uniqueLetters);
     console.log(hangMan.guessedCharacters.split(""));
     hangMan.setWrongGuessCount(hangMan.getWrongGuessCount(hangMan.compare(this.uniqueLetters, hangMan.guessedCharacters.split(""))));
-
+    
+    if (this.correctArray != undefined) {
     this.correctArrayObj = {};
     this.correctArray.forEach(letter => {
     this.correctArrayObj[letter] = this.correctArray[letter] ? this.correctArray[letter] + 1 : 1;
 });
+    }
 
-    console.log(hangMan.wrongGuessCount)
     if (hangMan.wrongGuessCount == 6) {
       //call fail game logic// 
       console.log("YOU LOST")
+      hangMan.createLoseMessage();
       hangMan.createResetButton();
     }
     if (JSON.stringify(Object.keys(hangMan.counts)) === JSON.stringify(Object.keys(hangMan.correctArrayObj))) {
@@ -155,60 +240,48 @@ var hangMan = {
     }
     
   },
-  wrongGuessCount:0,
   
   getWrongGuessCount: function(correctGuesses) {
     if (correctGuesses == 0) {
-      return 1 + hangMan.wrongGuessCount;
+      this.wrongGuessCount = this.wrongGuessCount + 1
+      return hangMan.wrongGuessCount;
     }
     return hangMan.guessedCharacters.length - correctGuesses.length;
   },
+  //sets the current wrong guess count and the number of guesses remaining//
   setWrongGuessCount: function(correctGuessCount) {
+    if (isNaN(correctGuessCount)) {
+      this.wrongGuessCount = 1 + hangMan.wrongGuessCount;
+    }
     this.wrongGuessCount = correctGuessCount;
+    hangMan.remainingGuesses = 6 - this.wrongGuessCount;
+    document.getElementById("remainingGuessesDiv").innerHTML = "Remaining Wrong Guesses: " + hangMan.remainingGuesses;
+    
   },
+  //takes two arrays as input parameters//
+  //returns an array of shared values between two input arrays//
   compare: function(arr1,arr2){
   
-  const objMap={};
-  
-  arr1.forEach((e1)=>arr2.forEach((e2)=> {if(e1 === e2){
-       objMap[e1]=objMap[e1]+1||1 ;
-    }
-  }
-));
-  console.log(Object.keys(objMap));
-  return Object.keys(objMap);
-},
-  correctArray: [],
-  
-  winState: false,
-  
-  createResetButton: function() {
-     resetButton = document.createElement("button");
-     resetButton.setAttribute("id", "resetButton");
-     resetButton.setAttribute("type", "button");
-     resetButtonContent = document.createTextNode("Play Again");
-     resetButton.appendChild(resetButtonContent);
-     parentResetButtonDiv = document.getElementById("winMessage");
-     document.body.insertBefore(resetButton, parentResetButtonDiv.nextSibling);
+    const objMap={};
 
-     resetButton.onclick = function() {
-       hangMan.resetGame();
-     }
-     
+    arr1.forEach((e1)=>arr2.forEach((e2)=> {if(e1 === e2){
+         objMap[e1]=objMap[e1]+1||1 ;
+      }
+    }
+  ));
+    console.log(Object.keys(objMap));
+    return Object.keys(objMap);
   },
-  createWinMessage: function() {
-    winMessage = document.createElement("h3");
-    winMessage.setAttribute("id", "winMessage")
-    winMessageContent = document.createTextNode("You Win!");
-    winMessage.appendChild(winMessageContent);
-    parentWinMessageDiv = document.getElementById("div3");
-    document.body.insertBefore(winMessage, parentWinMessageDiv.nextSibling);
+  
+  //runs to setup initial game state//
+  setupGame: function() {
+    hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
+    hangMan.setPlaceHolder(hangMan.getPlaceHolder());
+    hangMan.prepareScreen();
+    hangMan.getGuess();
   }
+
 
 
 }
-hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
-hangMan.setPlaceHolder(hangMan.getPlaceHolder());
-hangMan.prepareScreen();
-hangMan.resetGame();
-hangMan.getGuess();
+hangMan.setupGame();
