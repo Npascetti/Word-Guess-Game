@@ -2,15 +2,15 @@
 var hangMan = {
   //wrongGuessCount is initialized to 0//
   wrongGuessCount: 0,
-  //remainingGuesses is the number of remaining wrong guesses//
-  //maybe will enable to initialize value with user input//
-  remainingGuesses: 6,
-  
-  //initializing array was causing game to break...working now// 
-  //correctArray is empty array, until it becomes populated with correct guesses//
-  // correctArray: [],
   //winState is initialized to false//
   winState: false,
+  //sets the max allowedGuesses and initializes the remainingGuesses//
+  //getAllowedGuesses is called in setupGame//
+  //TODO: add to eventlistener to dynamically set allowedGuesses from user input//
+  getAllowedGuesses: function(allowedGuesses) {
+    this.allowedGuesses = allowedGuesses
+    this.remainingGuesses = allowedGuesses;
+  },
   //pokemons is a list of 151 pokemon//
   pokemons: ["BULBASAUR", "IVYSAUR", "VENUSAUR", "CHARMANDER", "CHARMELEON", "CHARIZARD", "SQUIRTLE", "WARTORTLE", "BLASTOISE", "CATERPIE", "METAPOD", "BUTTERFREE", "WEEDLE", "KAKUNA", "BEEDRILL", "PIDGEY", "PIDGEOTTO", "PIDGEOT", "RATTATA", "RATICATE", "SPEAROW", "FEAROW", "EKANS", "ARBOK", "PIKACHU", "RAICHU", "SANDSHREW", "SANDSLASH", "NIDORAN", "NIDORINA", "NIDOQUEEN", "NIDORAN", "NIDORINO", "NIDOKING", "CLEFAIRY", "CLEFABLE", "VULPIX", "NINETALES", "JIGGLYPUFF", "WIGGLYTUFF", "ZUBAT", "GOLBAT", "ODDISH", "GLOOM", "VILEPLUME", "PARAS", "PARASECT", "VENONAT", "VENOMOTH", "DIGLETT", "DUGTRIO", "MEOWTH", "PERSIAN", "PSYDUCK", "GOLDUCK", "MANKEY", "PRIMEAPE", "GROWLITHE", "ARCANINE", "POLIWAG", "POLIWHIRL", "POLIWRATH", "ABRA", "KADABRA", "ALAKAZAM", "MACHOP", "MACHOKE", "MACHAMP", "BELLSPROUT", "WEEPINBELL", "VICTREEBEL", "TENTACOOL", "TENTACRUEL", "GEODUDE", "GRAVELER", "GOLEM", "PONYTA", "RAPIDASH", "SLOWPOKE", "SLOWBRO", "MAGNEMITE", "MAGNETON", "FARFETCH'D", "DODUO", "DODRIO", "SEEL", "DEWGONG", "GRIMER", "MUK", "SHELLDER", "CLOYSTER", "GASTLY", "HAUNTER", "GENGAR", "ONIX", "DROWZEE", "HYPNO", "KRABBY", "KINGLER", "VOLTORB", "ELECTRODE", "EXEGGCUTE", "EXEGGUTOR", "CUBONE", "MAROWAK", "HITMONLEE", "HITMONCHAN", "LICKITUNG", "KOFFING", "WEEZING", "RHYHORN", "RHYDON", "CHANSEY", "TANGELA", "KANGASKHAN", "HORSEA", "SEADRA", "GOLDEEN", "SEAKING", "STARYU", "STARMIE", "MR. MIME", "SCYTHER", "JYNX", "ELECTABUZZ", "MAGMAR", "PINSIR", "TAUROS", "MAGIKARP", "GYARADOS", "LAPRAS", "DITTO", "EEVEE", "VAPOREON", "JOLTEON", "FLAREON", "PORYGON", "OMANYTE", "OMASTAR", "KABUTO", "KABUTOPS", "AERODACTYL", "SNORLAX", "ARTICUNO", "ZAPDOS", "MOLTRES", "DRATINI", "DRAGONAIR", "DRAGONITE", "MEWTWO", "MEW"],
   
@@ -22,23 +22,18 @@ var hangMan = {
     this.selectedPokemon = getRandomPokemon;
     console.log(this.selectedPokemon)
     this.counts = {};
+    //counts the instances of a letter in the selectedPokemon//
     this.selectedPokemon.split("").forEach(letter => {
+    //if selectedPokemon letter is in the counts object, increment enum by 1//
+    //if letter is first instance or only instance of letter in selectedPokemon, set count enum to 1//
     this.counts[letter] = this.counts[letter] ? this.counts[letter] + 1 : 1;
 });
     console.log(this.counts)
   },
   
   getPlaceHolder: function() {
-      
-      let placeHolder = [];
-      for (i = 0; i < this.selectedPokemon.length; i++) {
-          if (i == this.selectedPokemon.length - 1) {
-            placeHolder.push("_")
-            return placeHolder
-          } 
-          placeHolder.push("_ ")
-      }
-      return placeHolder
+      let placeHolder = this.selectedPokemon.split("").map(letter => letter = "_");
+      return placeHolder.join(" ")
   },
   setPlaceHolder: function(getPlaceHolder) {
     this.placeHolder = getPlaceHolder;
@@ -61,9 +56,6 @@ var hangMan = {
     this.currentGuess = currentGuess;
   },
   
-  // getPopulatePlaceHolder: function(populatePlaceHolder) {
-  //   return populatePlaceHolder
-  // },
   setPopulatePlaceHolder: function(correctArray) {
     this.correctArray = correctArray;
   },
@@ -115,7 +107,7 @@ var hangMan = {
   prepareScreen: function() {
       placeHolderDiv = document.createElement("div");
       placeHolderDiv.setAttribute("id", "div4");
-      placeHolderContent = document.createTextNode(this.placeHolder.join(""));
+      placeHolderContent = document.createTextNode(this.placeHolder);
       placeHolderDiv.appendChild(placeHolderContent);
       placeHolderCurrentDiv = document.getElementById("div1");
       document.body.insertBefore(placeHolderDiv, placeHolderCurrentDiv.nextSibling);
@@ -137,7 +129,7 @@ var hangMan = {
   
   getGuess: function() {
     document.body.onkeyup = function(event) {
-     if (hangMan.wrongGuessCount == 6 || hangMan.winState == true) {
+     if (hangMan.wrongGuessCount == hangMan.allowedGuesses || hangMan.winState == true) {
       return
     }
      
@@ -152,7 +144,6 @@ var hangMan = {
       hangMan.setGuessedCharacters(hangMan.getGuessedCharacters());
       hangMan.setPopulatePlaceHolder(hangMan.populatePlaceHolder());
       hangMan.populatePlaceHolder();
-      // hangMan.setRemainingGuesses(hangMan.getRemainingGuesses());
       hangMan.checkWinLose();
       }
     }
@@ -203,7 +194,7 @@ var hangMan = {
     if (loseMessage != null) {
       loseMessage.remove();
     }
-    hangMan.remainingGuesses = 6;
+    hangMan.remainingGuesses = hangMan.allowedGuesses;
     
     hangMan.prepareScreen();
   },
@@ -223,7 +214,7 @@ var hangMan = {
 });
     }
 
-    if (hangMan.wrongGuessCount == 6) {
+    if (hangMan.wrongGuessCount == hangMan.allowedGuesses) {
       //call fail game logic// 
       console.log("YOU LOST")
       hangMan.createLoseMessage();
@@ -254,7 +245,7 @@ var hangMan = {
       this.wrongGuessCount = 1 + hangMan.wrongGuessCount;
     }
     this.wrongGuessCount = correctGuessCount;
-    hangMan.remainingGuesses = 6 - this.wrongGuessCount;
+    hangMan.remainingGuesses = hangMan.allowedGuesses - this.wrongGuessCount;
     document.getElementById("remainingGuessesDiv").innerHTML = "Remaining Wrong Guesses: " + hangMan.remainingGuesses;
     
   },
@@ -277,6 +268,7 @@ var hangMan = {
   setupGame: function() {
     hangMan.setSelectedPokemon(hangMan.getRandomPokemon());
     hangMan.setPlaceHolder(hangMan.getPlaceHolder());
+    hangMan.getAllowedGuesses(6)
     hangMan.prepareScreen();
     hangMan.getGuess();
   }
